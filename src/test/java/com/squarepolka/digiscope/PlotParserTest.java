@@ -2,6 +2,7 @@ package com.squarepolka.digiscope;
 
 
 import com.squarepolka.digiscope.plot.PlotParser;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -18,35 +19,46 @@ class PlotParserTest {
     @Mock
     BufferedReader bufferedReader;
 
-//    PlotParser subject = PowerMockito.spy(new PlotParser(bufferedReader));
+    PlotParser subject = new PlotParser(bufferedReader);
 
     public PlotParserTest() {
-
+        // PowerMock wants this to be here, and empty.
     }
 
-    /*@Test
-    public void parseTimeCode1() {
+    @Test
+    public void parseNegTimeCode1() {
         double result = subject.parseTimeValue("1.0E-02");
-        assertEquals(100, result, 0);
+        assertEquals(0.010, result, 0);
     }
 
     @Test
-    public void parseTimeCode2() {
+    public void parseNegTimeCode2() {
         double result = subject.parseTimeValue("7.25E-04");
-        assertEquals(72500, result, 0);
+        assertEquals(0.000725, result, 0);
     }
 
     @Test
-    public void parseTimeCode3() {
+    public void parseNegTimeCode3() {
         double result = subject.parseTimeValue("2.63E-03");
-        assertEquals(2630, result, 0);
+        assertEquals(0.00263, result, 0);
     }
 
     @Test
-    public void parseTimeCode4() {
+    public void parseNegTimeCode4() {
         double result = subject.parseTimeValue("1.28E-03");
-        assertEquals(1280, result, 0);
-    }*/
+        assertEquals(0.001280, result, 0);
+    }
 
+    @Test
+    public void parsePosTimeCode1() {
+        double result = subject.parseTimeValue("1.0E+02");
+        assertEquals(100.0, result, 0);
+    }
+
+    @Test
+    public void parsePosTimeCode2() {
+        double result = subject.parseTimeValue("7.25E+04");
+        assertEquals(72500.0, result, 0);
+    }
 
 }

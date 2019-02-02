@@ -34,7 +34,7 @@ public class PlotParser {
 
     public PlotPointRecording parse() {
         PlotPointRecording plotPointRecording = new PlotPointRecording();
-        String line = "";
+        String line;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 handleParsedLine(line, plotPointRecording);
@@ -92,16 +92,9 @@ public class PlotParser {
         return new PlotPointDigital(plotPointRaw.getTimeValue(), digitalValue);
     }
 
-    private double parseTimeValue(String timeCodeString) {
+    public double parseTimeValue(String timeCodeString) {
         if (timeCodeString.length() > 0) {
-            String[] expComponents = timeCodeString.split("E-");
-            double significantDigits = Double.parseDouble(expComponents[0]);
-            double factor = Integer.parseInt(expComponents[1]);
-            double result = significantDigits;
-            for (int i = 0; i < factor; i++) {
-                result /= 10;
-            }
-            return result;
+            return Double.parseDouble(timeCodeString);
         } else {
             throw new ParseException("Tried to parse a zero length timecode");
         }
