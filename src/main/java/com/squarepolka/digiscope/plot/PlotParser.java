@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,6 +67,8 @@ public class PlotParser {
 
         } else if (data.length >= 2) { // parse a value 2.00E-04,4.680
             parseASample(data, plotPointRecording);
+        } else if (data.length >= 1 && data[0].startsWith("#")) { // log comment lines
+            LOGGER.log(Level.INFO, data[0]);
         } else {
             throw new ParseException("A line of data could not be parsed: " + line);
         }
@@ -73,8 +76,8 @@ public class PlotParser {
 
     private void parseASample(String[] data, PlotPointRecording plotPointRecording) {
         if (data.length >= 2) {
-            double timeValue = parseTimeValue(data[0]);
-            double voltValue = parseVoltValue(data[1]);
+            BigDecimal timeValue = parseTimeValue(data[0]);
+            BigDecimal voltValue = parseVoltValue(data[1]);
             PlotPointRaw plotPointRaw = new PlotPointRaw(timeValue, voltValue);
             PlotPointDigital plotPointDigital = decodePlotPointDigital(plotPointRaw);
             plotPointRecording.addPlotPoint(plotPointRaw, plotPointDigital);
@@ -85,23 +88,23 @@ public class PlotParser {
 
     private PlotPointDigital decodePlotPointDigital(PlotPointRaw plotPointRaw) {
         boolean digitalValue = false;
-        if (plotPointRaw.getVoltValue() > 3) {
+        if (plotPointRaw.getVoltValue().doubleValue() > 3) {
             digitalValue = true;
         }
-        return new PlotPointDigital(plotPointRaw.getTimeValue(), digitalValue);
+        return new PlotPointDigital(plotPointRaw.getTimestampMicroseconds(), digitalValue);
     }
 
-    public double parseTimeValue(String timeCodeString) {
+    public BigDecimal parseTimeValue(String timeCodeString) {
         if (timeCodeString.length() > 0) {
-            return Double.parseDouble(timeCodeString);
+            return new BigDecimal(timeCodeString);
         } else {
             throw new ParseException("Tried to parse a zero length timecode");
         }
     }
 
-    private double parseVoltValue(String value) {
+    private BigDecimal parseVoltValue(String value) {
         try {
-            return Double.parseDouble(value);
+            return new BigDecimal(value);
         } catch (NumberFormatException e) {
             throw new ParseException("NumberFormatException thrown when trying to parse the volt value " + value);
         }

@@ -18,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -49,8 +50,8 @@ public class PlotParserTest {
         Iterable<PlotPointRaw> result = plotPointRecording.getRawPoints();
         Iterator<PlotPointRaw> iterator = result.iterator();
         PlotPointRaw plotPointRaw = iterator.next();
-        assertEquals(0.000101, plotPointRaw.getTimeValue(), 0);
-        assertEquals(4.68, plotPointRaw.getVoltValue(), 0);
+        assertEquals(0.000101, plotPointRaw.getTimestampMicroseconds().doubleValue(), 0);
+        assertEquals(4.68, plotPointRaw.getVoltValue().doubleValue(), 0);
         assertEquals("Ensure there is only one value in the recording", false, iterator.hasNext());
     }
 
@@ -62,12 +63,12 @@ public class PlotParserTest {
         Iterator<PlotPointRaw> iterator = result.iterator();
 
         PlotPointRaw plotPointRawOne = iterator.next();
-        assertEquals(0.000101, plotPointRawOne.getTimeValue(), 0);
-        assertEquals(4.68, plotPointRawOne.getVoltValue(), 0);
+        assertEquals(0.000101, plotPointRawOne.getTimestampMicroseconds().doubleValue(), 0);
+        assertEquals(4.68, plotPointRawOne.getVoltValue().doubleValue(), 0);
 
         PlotPointRaw plotPointRawTwo = iterator.next();
-        assertEquals(4200.0, plotPointRawTwo.getTimeValue(), 0);
-        assertEquals(2.57, plotPointRawTwo.getVoltValue(), 0);
+        assertEquals(4200.0, plotPointRawTwo.getTimestampMicroseconds().doubleValue(), 0);
+        assertEquals(2.57, plotPointRawTwo.getVoltValue().doubleValue(), 0);
 
         assertEquals("Ensure there are only two values in the recording", false, iterator.hasNext());
     }
@@ -75,38 +76,38 @@ public class PlotParserTest {
 
     @Test
     public void parseNegTimeCode1() {
-        double result = subject.parseTimeValue("1.0E-02");
-        assertEquals(0.010, result, 0);
+        BigDecimal result = subject.parseTimeValue("1.0E-02");
+        assertEquals(0.010, result.doubleValue(), 0);
     }
 
     @Test
     public void parseNegTimeCode2() {
-        double result = subject.parseTimeValue("7.25E-04");
-        assertEquals(0.000725, result, 0);
+        BigDecimal result = subject.parseTimeValue("7.25E-04");
+        assertEquals(0.000725, result.doubleValue(), 0);
     }
 
     @Test
     public void parseNegTimeCode3() {
-        double result = subject.parseTimeValue("2.63E-03");
-        assertEquals(0.00263, result, 0);
+        BigDecimal result = subject.parseTimeValue("2.63E-03");
+        assertEquals(0.00263, result.doubleValue(), 0);
     }
 
     @Test
     public void parseNegTimeCode4() {
-        double result = subject.parseTimeValue("1.28E-03");
-        assertEquals(0.001280, result, 0);
+        BigDecimal result = subject.parseTimeValue("1.28E-03");
+        assertEquals(0.001280, result.doubleValue(), 0);
     }
 
     @Test
     public void parsePosTimeCode1() {
-        double result = subject.parseTimeValue("1.0E+02");
-        assertEquals(100.0, result, 0);
+        BigDecimal result = subject.parseTimeValue("1.0E+02");
+        assertEquals(100.0, result.doubleValue(), 0);
     }
 
     @Test
     public void parsePosTimeCode2() {
-        double result = subject.parseTimeValue("7.25E+04");
-        assertEquals(72500.0, result, 0);
+        BigDecimal result = subject.parseTimeValue("7.25E+04");
+        assertEquals(72500.0, result.doubleValue(), 0);
     }
 
 }
