@@ -78,7 +78,6 @@ public class PlotParser {
             PlotPointRaw plotPointRaw = new PlotPointRaw(timeValue, voltValue);
             PlotPointDigital plotPointDigital = decodePlotPointDigital(plotPointRaw);
             plotPointRecording.addPlotPoint(plotPointRaw, plotPointDigital);
-            plotPointRecording.addPlotPoint(plotPointRaw, plotPointDigital);
         } else {
             throw new ParseException("There wasn't enough data to parse a plot point");
         }

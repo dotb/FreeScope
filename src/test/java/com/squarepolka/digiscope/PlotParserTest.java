@@ -2,28 +2,76 @@ package com.squarepolka.digiscope;
 
 
 import com.squarepolka.digiscope.plot.PlotParser;
+import com.squarepolka.digiscope.plot.PlotPointRaw;
+import com.squarepolka.digiscope.plot.PlotPointRecording;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( { PlotParser.class })
-class PlotParserTest {
+public class PlotParserTest {
 
     @Mock
-    BufferedReader bufferedReader;
+    private BufferedReader bufferedReader;
 
-    PlotParser subject = new PlotParser(bufferedReader);
+    @InjectMocks
+    private PlotParser subject;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
+
 
     public PlotParserTest() {
         // PowerMock wants this to be here, and empty.
     }
+
+    @Test
+    public void testParsingASingleValue() throws IOException {
+        Mockito.when(bufferedReader.readLine()).thenReturn("1.01E-04,4.680", null);
+        PlotPointRecording plotPointRecording = subject.parse();
+        Iterable<PlotPointRaw> result = plotPointRecording.getRawPoints();
+        Iterator<PlotPointRaw> iterator = result.iterator();
+        PlotPointRaw plotPointRaw = iterator.next();
+        assertEquals(0.000101, plotPointRaw.getTimeValue(), 0);
+        assertEquals(4.68, plotPointRaw.getVoltValue(), 0);
+        assertEquals("Ensure there is only one value in the recording", false, iterator.hasNext());
+    }
+
+    @Test
+    public void testParsingTwoValues() throws IOException {
+        Mockito.when(bufferedReader.readLine()).thenReturn("1.01E-04,4.680", "4.20E+03,2.570", null);
+        PlotPointRecording plotPointRecording = subject.parse();
+        Iterable<PlotPointRaw> result = plotPointRecording.getRawPoints();
+        Iterator<PlotPointRaw> iterator = result.iterator();
+
+        PlotPointRaw plotPointRawOne = iterator.next();
+        assertEquals(0.000101, plotPointRawOne.getTimeValue(), 0);
+        assertEquals(4.68, plotPointRawOne.getVoltValue(), 0);
+
+        PlotPointRaw plotPointRawTwo = iterator.next();
+        assertEquals(4200.0, plotPointRawTwo.getTimeValue(), 0);
+        assertEquals(2.57, plotPointRawTwo.getVoltValue(), 0);
+
+        assertEquals("Ensure there are only two values in the recording", false, iterator.hasNext());
+    }
+
 
     @Test
     public void parseNegTimeCode1() {
