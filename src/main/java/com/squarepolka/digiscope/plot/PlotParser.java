@@ -1,4 +1,4 @@
-package com.squarepolka.digiscope;
+package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.exceptions.ParseException;
 

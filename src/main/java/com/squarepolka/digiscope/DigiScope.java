@@ -1,6 +1,9 @@
 package com.squarepolka.digiscope;
 
-import java.util.logging.Level;
+import com.squarepolka.digiscope.plot.PlotParser;
+import com.squarepolka.digiscope.plot.PlotPointRaw;
+import com.squarepolka.digiscope.plot.PlotPointRecording;
+
 import java.util.logging.Logger;
 
 public class DigiScope {

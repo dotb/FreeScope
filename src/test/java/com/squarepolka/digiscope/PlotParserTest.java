@@ -1,7 +1,7 @@
 package com.squarepolka.digiscope;
 
 
-import org.junit.Test;
+import com.squarepolka.digiscope.plot.PlotParser;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;

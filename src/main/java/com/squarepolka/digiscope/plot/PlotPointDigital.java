@@ -1,4 +1,4 @@
-package com.squarepolka.digiscope;
+package com.squarepolka.digiscope.plot;
 
 public class PlotPointDigital {
 
