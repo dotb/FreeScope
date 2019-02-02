@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PlotParser {
 
@@ -14,13 +16,13 @@ public class PlotParser {
         ,#voltbase=1 000 000(mv/100) - 1v
         #size=4064
      */
+    private static final Logger LOGGER = Logger.getLogger(PlotParser.class.getName());
     private BufferedReader bufferedReader;
 
     public static PlotParser newPlotParser(String csvFilePath) {
         try {
             BufferedReader newBufferedReader = new BufferedReader(new FileReader(csvFilePath));
-            PlotParser newPlotParser = new PlotParser(newBufferedReader);
-            return newPlotParser;
+            return new PlotParser(newBufferedReader);
         } catch (FileNotFoundException e) {
             throw new ParseException("Could not find the file " + csvFilePath);
         }
@@ -46,7 +48,7 @@ public class PlotParser {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    throw new ParseException("IOException while trying to close the CSV file buffered reader " + e.getLocalizedMessage());
+                    LOGGER.log(Level.SEVERE, "IOException while trying to close the CSV file buffered reader " + e.getLocalizedMessage());
                 }
             }
         }
@@ -87,15 +89,14 @@ public class PlotParser {
         if (plotPointRaw.getVoltValue() > 3) {
             digitalValue = true;
         }
-        PlotPointDigital plotPointDigital = new PlotPointDigital(plotPointRaw.getTimeValue(), digitalValue);
-        return plotPointDigital;
+        return new PlotPointDigital(plotPointRaw.getTimeValue(), digitalValue);
     }
 
     private double parseTimeValue(String timeCodeString) {
         if (timeCodeString.length() > 0) {
-            String expComponents[] = timeCodeString.split("E-");
-            double significantDigits = Double.valueOf(expComponents[0]);
-            double factor = Integer.valueOf(expComponents[1]).intValue();
+            String[] expComponents = timeCodeString.split("E-");
+            double significantDigits = Double.parseDouble(expComponents[0]);
+            double factor = Integer.parseInt(expComponents[1]);
             double result = significantDigits;
             for (int i = 0; i < factor; i++) {
                 result /= 10;
@@ -108,7 +109,7 @@ public class PlotParser {
 
     private double parseVoltValue(String value) {
         try {
-            return Double.valueOf(value).doubleValue();
+            return Double.parseDouble(value);
         } catch (NumberFormatException e) {
             throw new ParseException("NumberFormatException thrown when trying to parse the volt value " + value);
         }
