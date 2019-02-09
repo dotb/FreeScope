@@ -13,8 +13,6 @@ public class PulseProcessor {
     private PlotPointRaw pulseEndPoint = null;
 
     public void processPlotPoint(PlotPointRaw plotPoint, PlotPointRecording plotPointRecording) {
-//        System.out.println("linear processing plot point " + plotPoint.getTimestampMilliseconds() + "ms " + plotPoint.getVoltValue() + "v");
-
         // Set the baseline point from which pules will be measured
         if (null == baseLinePoint) {
             baseLinePoint = plotPoint;

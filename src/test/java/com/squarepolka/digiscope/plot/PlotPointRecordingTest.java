@@ -174,4 +174,21 @@ public class PlotPointRecordingTest {
         assertEquals(replacementPlotPoint, iterator.next());
     }
 
+    @Test
+    public void testVerticalGraphOutput() {
+        PlotPointRaw firstPlotPoint = new PlotPointRaw(new BigDecimal(1), new BigDecimal(2));
+        PlotPointRaw secondPlotPoint = new PlotPointRaw(new BigDecimal(3), new BigDecimal(4));
+        PlotPointRaw thirdPlotPoint = new PlotPointRaw(new BigDecimal(5), new BigDecimal(6));
+
+        subject.addPlotPoint(firstPlotPoint);
+        subject.addPlotPoint(secondPlotPoint);
+        subject.addPlotPoint(thirdPlotPoint);
+
+        String verticalGraphExpected = "0\t1000ms\t:\t2v\n" +
+                "1\t3000ms\t:\t4v\n" +
+                "2\t5000ms\t:\t6v\n";
+        String verticalGraphGenerated = subject.getVerticalGraph();
+        assertEquals(verticalGraphExpected, verticalGraphGenerated);
+    }
+
 }

@@ -67,6 +67,7 @@ public class PlotPointRecording {
             stringBuffer.append("\t");
             stringBuffer.append(plotPoint.toString());
             stringBuffer.append("\n");
+            graphIndex++;
         }
         return stringBuffer.toString();
     }
