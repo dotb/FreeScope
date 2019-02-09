@@ -1,4 +1,4 @@
-package com.squarepolka.digiscope.plot.factory;
+package com.squarepolka.digiscope.plot.processors;
 
 import com.squarepolka.digiscope.plot.PlotPointRecording;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointPulse;

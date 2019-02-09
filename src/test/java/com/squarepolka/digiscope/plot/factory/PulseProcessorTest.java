@@ -1,6 +1,7 @@
 package com.squarepolka.digiscope.plot.factory;
 
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
+import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,7 +1,7 @@
 package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.exceptions.ParseException;
-import com.squarepolka.digiscope.plot.factory.PulseProcessor;
+import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
 
 import java.io.BufferedReader;
