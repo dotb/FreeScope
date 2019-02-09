@@ -1,41 +1,78 @@
 package com.squarepolka.digiscope.plot;
 
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointDigital;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointPulse;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 
 public class PlotPointRecording {
 
     private double timeResolution; // 20.0ms
     private double voltResolution; // 1v
     private double sampleCount; // 4064
-    private List<PlotPointRaw> rawPoints;
-    private List<PlotPointDigital> digitalPoints;
-    private List<PlotPointPulse> pulsePoints;
+    private PlotPoint firstPlotPoint; // The start of a linked list of points
+    private PlotPoint lastPlotPoint; // The end of the list of points
+    private double count;
 
     public PlotPointRecording() {
-        this.rawPoints = new ArrayList<PlotPointRaw>();
-        this.pulsePoints = new ArrayList<PlotPointPulse>();
-        this.digitalPoints = new ArrayList<PlotPointDigital>();
+        this.firstPlotPoint = null;
+        this.count = 0;
     }
 
-    public void addPlotPointRaw(PlotPointRaw plotPointRaw) {
-        rawPoints.add(plotPointRaw);
+    public void addPlotPoint(PlotPoint newPlotPoint) {
+        if (null == firstPlotPoint) { // This is the first plot point
+            firstPlotPoint = newPlotPoint;
+            lastPlotPoint = newPlotPoint;
+        } else { // Add this point to the existing list
+            lastPlotPoint.setNextPlotPoint(newPlotPoint);
+            newPlotPoint.setPreviousPoint(lastPlotPoint);
+            lastPlotPoint = newPlotPoint;
+        }
+        count++;
     }
 
-    public void addPlotPointPulse(PlotPointPulse plotPointPulse) {
-        pulsePoints.add(plotPointPulse);
+    public void replacePlotPoint(PlotPoint originalPoint, PlotPoint newPlotPoint) {
+        if (null == firstPlotPoint) { // The recoding is empty. Start fresh
+            addPlotPoint(newPlotPoint);
+        } else {
+            PlotPoint leftHandPoint = originalPoint.getPreviousPoint();
+            PlotPoint rightHandPlotPoint = originalPoint.getNextPlotPoint();
+            if (null != leftHandPoint) {
+                leftHandPoint.setNextPlotPoint(newPlotPoint);
+            }
+            if (null != rightHandPlotPoint) {
+                rightHandPlotPoint.setPreviousPoint(newPlotPoint);
+            }
+
+            newPlotPoint.setPreviousPoint(leftHandPoint);
+            newPlotPoint.setNextPlotPoint(rightHandPlotPoint);
+            originalPoint.setPreviousPoint(null);
+            originalPoint.setNextPlotPoint(null);
+
+            // replace the first plot point if required
+            if (originalPoint == firstPlotPoint) {
+                firstPlotPoint = newPlotPoint;
+            }
+        }
     }
 
-    public Iterable<PlotPointPulse> getPulsePoints() {
-        return pulsePoints;
+    public PlotPointIterator getPoints() {
+        return new PlotPointIterator(firstPlotPoint);
     }
 
-    public Iterable<PlotPointRaw> getRawPoints() {
-        return rawPoints;
+    public String getVerticalGraph() {
+        PlotPointIterator plotPointIterator = getPoints();
+        StringBuffer stringBuffer = new StringBuffer();
+        int graphIndex = 0;
+        while (plotPointIterator.hasNext()) {
+            PlotPoint plotPoint = plotPointIterator.next();
+            stringBuffer.append(graphIndex);
+            stringBuffer.append("\t");
+            stringBuffer.append(plotPoint.toString());
+            stringBuffer.append("\n");
+        }
+        return stringBuffer.toString();
     }
 
+    // Generated getters and setters
+    public double getCount() {
+        return count;
+    }
 }
