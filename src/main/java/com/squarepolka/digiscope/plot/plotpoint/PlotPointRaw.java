@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 public class PlotPointRaw extends PlotPoint {
 
     private BigDecimal voltValue;
-    private PlotPointPulse relatedPlotPointPulse;
-    private PlotPointDigital relatedPlotPointDigital;
 
     public PlotPointRaw(BigDecimal timestampSeconds, BigDecimal voltValue) {
         super(timestampSeconds);
@@ -19,22 +17,6 @@ public class PlotPointRaw extends PlotPoint {
 
     public String toString() {
         return super.toString() + "\t:\t" + voltValue + "v";
-    }
-
-    public PlotPointPulse getRelatedPlotPointPulse() {
-        return relatedPlotPointPulse;
-    }
-
-    public void setRelatedPlotPointPulse(PlotPointPulse relatedPlotPointPulse) {
-        this.relatedPlotPointPulse = relatedPlotPointPulse;
-    }
-
-    public PlotPointDigital getRelatedPlotPointDigital() {
-        return relatedPlotPointDigital;
-    }
-
-    public void setRelatedPlotPointDigital(PlotPointDigital relatedPlotPointDigital) {
-        this.relatedPlotPointDigital = relatedPlotPointDigital;
     }
 
 }
