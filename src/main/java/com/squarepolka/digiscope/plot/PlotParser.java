@@ -80,11 +80,11 @@ public class PlotParser {
     }
 
     private void parseASample(String[] data, PlotPointRecording plotPointRecording) {
-        if (data.length >= 2) {
+        if (data.length >= 2) { // Sample must have at both a time and volt value
             BigDecimal timeValue = parseTimeValue(data[0]);
             BigDecimal voltValue = parseVoltValue(data[1]);
             PlotPointRaw plotPointRaw = new PlotPointRaw(timeValue, voltValue);
-            plotPointRecording.addPlotPointRaw(plotPointRaw);
+            plotPointRecording.addPlotPoint(plotPointRaw);
             pulseProcessor.processPlotPoint(plotPointRaw, plotPointRecording);
         } else {
             throw new ParseException("There wasn't enough data to parse a plot point");

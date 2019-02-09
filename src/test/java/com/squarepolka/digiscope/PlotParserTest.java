@@ -2,9 +2,11 @@ package com.squarepolka.digiscope;
 
 
 import com.squarepolka.digiscope.plot.PlotParser;
+import com.squarepolka.digiscope.plot.PlotPointIterator;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
 import com.squarepolka.digiscope.plot.PlotPointRecording;
 
+import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +21,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,6 +30,9 @@ public class PlotParserTest {
 
     @Mock
     private BufferedReader bufferedReader;
+
+    @Mock
+    private PulseProcessor pulseProcessor;
 
     @InjectMocks
     private PlotParser subject;
@@ -47,9 +51,8 @@ public class PlotParserTest {
     public void testParsingASingleValue() throws IOException {
         Mockito.when(bufferedReader.readLine()).thenReturn("1.01E-04,4.680", null);
         PlotPointRecording plotPointRecording = subject.parse();
-        Iterable<PlotPointRaw> result = plotPointRecording.getRawPoints();
-        Iterator<PlotPointRaw> iterator = result.iterator();
-        PlotPointRaw plotPointRaw = iterator.next();
+        PlotPointIterator iterator = plotPointRecording.getPoints();
+        PlotPointRaw plotPointRaw = (PlotPointRaw) iterator.next();
         assertEquals(0.000101, plotPointRaw.getTimestampSeconds().doubleValue(), 0);
         assertEquals(4.68, plotPointRaw.getVoltValue().doubleValue(), 0);
         assertEquals("Ensure there is only one value in the recording", false, iterator.hasNext());
@@ -59,14 +62,13 @@ public class PlotParserTest {
     public void testParsingTwoValues() throws IOException {
         Mockito.when(bufferedReader.readLine()).thenReturn("1.01E-04,4.680", "4.20E+03,2.570", null);
         PlotPointRecording plotPointRecording = subject.parse();
-        Iterable<PlotPointRaw> result = plotPointRecording.getRawPoints();
-        Iterator<PlotPointRaw> iterator = result.iterator();
+        PlotPointIterator iterator = plotPointRecording.getPoints();
 
-        PlotPointRaw plotPointRawOne = iterator.next();
+        PlotPointRaw plotPointRawOne = (PlotPointRaw) iterator.next();
         assertEquals(0.000101, plotPointRawOne.getTimestampSeconds().doubleValue(), 0);
         assertEquals(4.68, plotPointRawOne.getVoltValue().doubleValue(), 0);
 
-        PlotPointRaw plotPointRawTwo = iterator.next();
+        PlotPointRaw plotPointRawTwo = (PlotPointRaw) iterator.next();
         assertEquals(4200.0, plotPointRawTwo.getTimestampSeconds().doubleValue(), 0);
         assertEquals(2.57, plotPointRawTwo.getVoltValue().doubleValue(), 0);
 

@@ -26,9 +26,7 @@ public class PulseProcessor {
             if (null != pulseStartPoint && null != pulseEndPoint) {
                 // Yes, we've been recording a pulse!
                 PlotPointPulse plotPointPulse = new PlotPointPulse(pulseStartPoint, pulseEndPoint);
-                pulseStartPoint.setRelatedPlotPointPulse(plotPointPulse);
-                pulseEndPoint.setRelatedPlotPointPulse(plotPointPulse);
-                plotPointRecording.addPlotPointPulse(plotPointPulse);
+                plotPointRecording.replacePlotPoint(pulseStartPoint, plotPointPulse);
                 // Reset the pointers so that they can record the next pulse
                 pulseStartPoint = pulseEndPoint = null;
             }
