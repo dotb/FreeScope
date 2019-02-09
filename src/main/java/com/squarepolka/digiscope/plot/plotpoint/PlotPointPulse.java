@@ -16,7 +16,7 @@ public class PlotPointPulse extends PlotPointRaw {
     }
 
     public String toString() {
-        return startPulse.getTimestampMicroseconds() + "us : " + startPulse.getVoltValue() + "v for " + duration + "us";
+        return super.toString() + "\tfor " + duration + "us";
     }
 
 }

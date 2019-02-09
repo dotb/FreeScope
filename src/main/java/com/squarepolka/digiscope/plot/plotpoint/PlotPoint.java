@@ -16,4 +16,8 @@ public abstract class PlotPoint {
     public BigDecimal getTimestampMilliseconds() {
         return timestampMicroseconds.multiply(new BigDecimal(1000));
     }
+
+    public String toString() {
+        return timestampMicroseconds.toString() + "us";
+    }
 }

@@ -16,6 +16,6 @@ public class PlotPointRaw extends PlotPoint {
     }
 
     public String toString() {
-        return getTimestampMicroseconds() + "us : " + voltValue + "v";
+        return super.toString() + "\t:\t" + voltValue + "v";
     }
 }
