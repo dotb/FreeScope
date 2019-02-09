@@ -24,8 +24,10 @@ public class PulseProcessor {
         if (isPointAtBaseline(plotPoint, baseLinePoint)) { // Belongs to the baseline
             // We're back to the baseline. Did we ever leave? Have we been recording a pulse?
             if (null != pulseStartPoint && null != pulseEndPoint) {
-                // Yes, we've been recording a pulse1
+                // Yes, we've been recording a pulse!
                 PlotPointPulse plotPointPulse = new PlotPointPulse(pulseStartPoint, pulseEndPoint);
+                pulseStartPoint.setRelatedPlotPointPulse(plotPointPulse);
+                pulseEndPoint.setRelatedPlotPointPulse(plotPointPulse);
                 plotPointRecording.addPlotPointPulse(plotPointPulse);
                 // Reset the pointers so that they can record the next pulse
                 pulseStartPoint = pulseEndPoint = null;
