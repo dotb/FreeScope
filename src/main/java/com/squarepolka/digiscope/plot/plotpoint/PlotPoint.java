@@ -1,15 +1,12 @@
-package com.squarepolka.digiscope.plot;
+package com.squarepolka.digiscope.plot.plotpoint;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-public class PlotPointRaw {
+public abstract class PlotPoint {
     private BigDecimal timestampMicroseconds;
-    private BigDecimal voltValue;
 
-    public PlotPointRaw(BigDecimal timestampMicroseconds, BigDecimal voltValue) {
+    public PlotPoint(BigDecimal timestampMicroseconds) {
         this.timestampMicroseconds = timestampMicroseconds;
-        this.voltValue = voltValue;
     }
 
     public BigDecimal getTimestampMicroseconds() {
@@ -18,9 +15,5 @@ public class PlotPointRaw {
 
     public BigDecimal getTimestampMilliseconds() {
         return timestampMicroseconds.multiply(new BigDecimal(1000));
-    }
-
-    public BigDecimal getVoltValue() {
-        return voltValue;
     }
 }

@@ -1,6 +1,8 @@
 package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.exceptions.ParseException;
+import com.squarepolka.digiscope.plot.factory.PulseProcessor;
+import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,18 +21,21 @@ public class PlotParser {
      */
     private static final Logger LOGGER = Logger.getLogger(PlotParser.class.getName());
     private BufferedReader bufferedReader;
+    private PulseProcessor pulseProcessor;
 
     public static PlotParser newPlotParser(String csvFilePath) {
         try {
             BufferedReader newBufferedReader = new BufferedReader(new FileReader(csvFilePath));
-            return new PlotParser(newBufferedReader);
+            PulseProcessor pulseProcessor = new PulseProcessor();
+            return new PlotParser(newBufferedReader, pulseProcessor);
         } catch (FileNotFoundException e) {
             throw new ParseException("Could not find the file " + csvFilePath);
         }
     }
 
-    public PlotParser(BufferedReader bufferedReader) {
+    public PlotParser(BufferedReader bufferedReader, PulseProcessor pulseProcessor) {
         this.bufferedReader = bufferedReader;
+        this.pulseProcessor = pulseProcessor;
     }
 
     public PlotPointRecording parse() {
@@ -79,19 +84,11 @@ public class PlotParser {
             BigDecimal timeValue = parseTimeValue(data[0]);
             BigDecimal voltValue = parseVoltValue(data[1]);
             PlotPointRaw plotPointRaw = new PlotPointRaw(timeValue, voltValue);
-            PlotPointDigital plotPointDigital = decodePlotPointDigital(plotPointRaw);
-            plotPointRecording.addPlotPoint(plotPointRaw, plotPointDigital);
+            plotPointRecording.addPlotPointRaw(plotPointRaw);
+            pulseProcessor.processPlotPoint(plotPointRaw, plotPointRecording);
         } else {
             throw new ParseException("There wasn't enough data to parse a plot point");
         }
-    }
-
-    private PlotPointDigital decodePlotPointDigital(PlotPointRaw plotPointRaw) {
-        boolean digitalValue = false;
-        if (plotPointRaw.getVoltValue().doubleValue() > 3) {
-            digitalValue = true;
-        }
-        return new PlotPointDigital(plotPointRaw.getTimestampMicroseconds(), digitalValue);
     }
 
     public BigDecimal parseTimeValue(String timeCodeString) {

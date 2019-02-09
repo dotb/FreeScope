@@ -2,7 +2,7 @@ package com.squarepolka.digiscope;
 
 
 import com.squarepolka.digiscope.plot.PlotParser;
-import com.squarepolka.digiscope.plot.PlotPointRaw;
+import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
 import com.squarepolka.digiscope.plot.PlotPointRecording;
 
 import org.junit.Before;

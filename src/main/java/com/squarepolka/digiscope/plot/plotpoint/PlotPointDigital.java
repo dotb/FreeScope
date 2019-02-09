@@ -1,4 +1,4 @@
-package com.squarepolka.digiscope.plot;
+package com.squarepolka.digiscope.plot.plotpoint;
 
 import java.math.BigDecimal;
 
