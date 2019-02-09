@@ -3,21 +3,21 @@ package com.squarepolka.digiscope.plot.plotpoint;
 import java.math.BigDecimal;
 
 public abstract class PlotPoint {
-    private BigDecimal timestampMicroseconds;
+    private BigDecimal timestampSeconds;
 
-    public PlotPoint(BigDecimal timestampMicroseconds) {
-        this.timestampMicroseconds = timestampMicroseconds;
+    public PlotPoint(BigDecimal timestampSeconds) {
+        this.timestampSeconds = timestampSeconds;
     }
 
-    public BigDecimal getTimestampMicroseconds() {
-        return timestampMicroseconds;
+    public BigDecimal getTimestampSeconds() {
+        return timestampSeconds;
     }
 
     public BigDecimal getTimestampMilliseconds() {
-        return timestampMicroseconds.multiply(new BigDecimal(1000));
+        return timestampSeconds.multiply(new BigDecimal(1000));
     }
 
     public String toString() {
-        return timestampMicroseconds.toString() + "us";
+        return getTimestampMilliseconds() + "ms";
     }
 }

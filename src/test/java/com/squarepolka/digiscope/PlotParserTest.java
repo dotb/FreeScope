@@ -50,7 +50,7 @@ public class PlotParserTest {
         Iterable<PlotPointRaw> result = plotPointRecording.getRawPoints();
         Iterator<PlotPointRaw> iterator = result.iterator();
         PlotPointRaw plotPointRaw = iterator.next();
-        assertEquals(0.000101, plotPointRaw.getTimestampMicroseconds().doubleValue(), 0);
+        assertEquals(0.000101, plotPointRaw.getTimestampSeconds().doubleValue(), 0);
         assertEquals(4.68, plotPointRaw.getVoltValue().doubleValue(), 0);
         assertEquals("Ensure there is only one value in the recording", false, iterator.hasNext());
     }
@@ -63,11 +63,11 @@ public class PlotParserTest {
         Iterator<PlotPointRaw> iterator = result.iterator();
 
         PlotPointRaw plotPointRawOne = iterator.next();
-        assertEquals(0.000101, plotPointRawOne.getTimestampMicroseconds().doubleValue(), 0);
+        assertEquals(0.000101, plotPointRawOne.getTimestampSeconds().doubleValue(), 0);
         assertEquals(4.68, plotPointRawOne.getVoltValue().doubleValue(), 0);
 
         PlotPointRaw plotPointRawTwo = iterator.next();
-        assertEquals(4200.0, plotPointRawTwo.getTimestampMicroseconds().doubleValue(), 0);
+        assertEquals(4200.0, plotPointRawTwo.getTimestampSeconds().doubleValue(), 0);
         assertEquals(2.57, plotPointRawTwo.getVoltValue().doubleValue(), 0);
 
         assertEquals("Ensure there are only two values in the recording", false, iterator.hasNext());

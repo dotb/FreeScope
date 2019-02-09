@@ -6,8 +6,8 @@ public class PlotPointRaw extends PlotPoint {
 
     private BigDecimal voltValue;
 
-    public PlotPointRaw(BigDecimal timestampMicroseconds, BigDecimal voltValue) {
-        super(timestampMicroseconds);
+    public PlotPointRaw(BigDecimal timestampSeconds, BigDecimal voltValue) {
+        super(timestampSeconds);
         this.voltValue = voltValue;
     }
 
@@ -18,4 +18,5 @@ public class PlotPointRaw extends PlotPoint {
     public String toString() {
         return super.toString() + "\t:\t" + voltValue + "v";
     }
+
 }
