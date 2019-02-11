@@ -1,6 +1,7 @@
 package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
+import com.squarepolka.digiscope.plot.plotpoint.PlotPointBinary;
 
 public class PlotPointRecording {
 
@@ -68,6 +69,24 @@ public class PlotPointRecording {
             stringBuffer.append(plotPoint.toString());
             stringBuffer.append("\n");
             graphIndex++;
+        }
+        return stringBuffer.toString();
+    }
+
+    public String getBinaryDigits() {
+        PlotPointIterator plotPointIterator = getPoints();
+        StringBuffer stringBuffer = new StringBuffer();
+
+        while (plotPointIterator.hasNext()) {
+            PlotPoint plotPoint = plotPointIterator.next();
+            if (plotPoint instanceof PlotPointBinary) {
+                PlotPointBinary plotPointBinary = (PlotPointBinary) plotPoint;
+                if (plotPointBinary.isDigitalValue()) {
+                    stringBuffer.append("1");
+                } else {
+                    stringBuffer.append("0");
+                }
+            }
         }
         return stringBuffer.toString();
     }

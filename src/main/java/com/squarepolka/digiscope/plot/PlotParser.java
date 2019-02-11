@@ -1,6 +1,8 @@
 package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.exceptions.ParseException;
+import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
+import com.squarepolka.digiscope.plot.processors.BinaryProcessor;
 import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
 
@@ -22,20 +24,23 @@ public class PlotParser {
     private static final Logger LOGGER = Logger.getLogger(PlotParser.class.getName());
     private BufferedReader bufferedReader;
     private PulseProcessor pulseProcessor;
+    private BinaryProcessor binaryProcessor;
 
     public static PlotParser newPlotParser(String csvFilePath) {
         try {
             BufferedReader newBufferedReader = new BufferedReader(new FileReader(csvFilePath));
             PulseProcessor pulseProcessor = new PulseProcessor();
-            return new PlotParser(newBufferedReader, pulseProcessor);
+            BinaryProcessor binaryProcessor = new BinaryProcessor();
+            return new PlotParser(newBufferedReader, pulseProcessor, binaryProcessor);
         } catch (FileNotFoundException e) {
             throw new ParseException("Could not find the file " + csvFilePath);
         }
     }
 
-    public PlotParser(BufferedReader bufferedReader, PulseProcessor pulseProcessor) {
+    public PlotParser(BufferedReader bufferedReader, PulseProcessor pulseProcessor, BinaryProcessor binaryProcessor) {
         this.bufferedReader = bufferedReader;
         this.pulseProcessor = pulseProcessor;
+        this.binaryProcessor = binaryProcessor;
     }
 
     public PlotPointRecording parse() {
@@ -85,7 +90,8 @@ public class PlotParser {
             BigDecimal voltValue = parseVoltValue(data[1]);
             PlotPointRaw plotPointRaw = new PlotPointRaw(timeValue, voltValue);
             plotPointRecording.addPlotPoint(plotPointRaw);
-            pulseProcessor.processPlotPoint(plotPointRaw, plotPointRecording);
+            PlotPoint processedPlotPoint = pulseProcessor.processPlotPoint(plotPointRaw, plotPointRecording);
+            binaryProcessor.processPlotPoint(processedPlotPoint, plotPointRecording);
         } else {
             throw new ParseException("There wasn't enough data to parse a plot point");
         }

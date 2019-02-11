@@ -1,6 +1,7 @@
 package com.squarepolka.digiscope.plot.processors;
 
 import com.squarepolka.digiscope.plot.PlotPointRecording;
+import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointPulse;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
 
@@ -12,7 +13,7 @@ public class PulseProcessor {
     private PlotPointRaw pulseStartPoint = null;
     private PlotPointRaw pulseEndPoint = null;
 
-    public void processPlotPoint(PlotPointRaw plotPoint, PlotPointRecording plotPointRecording) {
+    public PlotPoint processPlotPoint(PlotPointRaw plotPoint, PlotPointRecording plotPointRecording) {
         // Set the baseline point from which pules will be measured
         if (null == baseLinePoint) {
             baseLinePoint = plotPoint;
@@ -27,6 +28,7 @@ public class PulseProcessor {
                 plotPointRecording.replacePlotPoint(pulseStartPoint, plotPointPulse);
                 // Reset the pointers so that they can record the next pulse
                 pulseStartPoint = pulseEndPoint = null;
+                return plotPointPulse;
             }
         } else { // Belongs to a pulse
             if (null == pulseStartPoint) { // There is no starting point so we begin recording a pulse
@@ -35,7 +37,7 @@ public class PulseProcessor {
             // Keep pointing to the potential end of the pulse
             pulseEndPoint = plotPoint;
         }
-
+        return plotPoint;
     }
 
     public boolean isPointAtBaseline(PlotPointRaw plotPoint, PlotPointRaw baseLinePlotPoint) {
