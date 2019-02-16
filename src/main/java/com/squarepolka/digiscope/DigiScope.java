@@ -20,6 +20,8 @@ public class DigiScope {
         System.out.println(plotPointRecording.getPlotPoints());
         System.out.println(plotPointRecording.getBinaryDigits());
 
+        plotPointRecording.getHorizontalGraph();
+
     }
 
 }

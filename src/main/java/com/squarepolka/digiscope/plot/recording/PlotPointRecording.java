@@ -3,6 +3,9 @@ package com.squarepolka.digiscope.plot.recording;
 import com.squarepolka.digiscope.plot.PlotPointIterator;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointBinary;
+import graph.HorizontalGraph;
+
+import java.math.BigDecimal;
 
 public class PlotPointRecording {
 
@@ -90,6 +93,11 @@ public class PlotPointRecording {
             }
         }
         return stringBuffer.toString();
+    }
+
+    public HorizontalGraph getHorizontalGraph() {
+        HorizontalGraph horizontalGraph = new HorizontalGraph(new BigDecimal(1), new BigDecimal(0), new BigDecimal(100));
+        return  horizontalGraph;
     }
 
     // Generated getters and setters
