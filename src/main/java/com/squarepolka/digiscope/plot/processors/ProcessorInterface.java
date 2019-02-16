@@ -1,7 +1,7 @@
 package com.squarepolka.digiscope.plot.processors;
 
-import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
+import plotpoint.PlotPoint;
+import recording.PlotPointRecording;
 
 public interface ProcessorInterface {
 

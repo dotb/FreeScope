@@ -1,19 +1,18 @@
 package com.squarepolka.digiscope.plot.processors;
 
-import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointPulse;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
+import plotpoint.PlotPoint;
+import plotpoint.PlotPointPulse;
+import recording.PlotPointRecording;
 
 import java.math.BigDecimal;
 
 public class PulseProcessor {
 
-    private PlotPointRaw baseLinePoint = null;
-    private PlotPointRaw pulseStartPoint = null;
-    private PlotPointRaw pulseEndPoint = null;
+    private PlotPoint baseLinePoint = null;
+    private PlotPoint pulseStartPoint = null;
+    private PlotPoint pulseEndPoint = null;
 
-    public PlotPoint processPlotPoint(PlotPointRaw plotPoint, PlotPointRecording plotPointRecording) {
+    public PlotPoint processPlotPoint(PlotPoint plotPoint, PlotPointRecording plotPointRecording) {
         // Set the baseline point from which pules will be measured
         if (null == baseLinePoint) {
             baseLinePoint = plotPoint;
@@ -40,7 +39,7 @@ public class PulseProcessor {
         return plotPoint;
     }
 
-    public boolean isPointAtBaseline(PlotPointRaw plotPoint, PlotPointRaw baseLinePlotPoint) {
+    public boolean isPointAtBaseline(PlotPoint plotPoint, PlotPoint baseLinePlotPoint) {
         BigDecimal threshold = new BigDecimal(0.8);
         BigDecimal difference =  plotPoint.getVoltValue().subtract(baseLinePlotPoint.getVoltValue());
         return difference.abs().compareTo(threshold) <= 0;

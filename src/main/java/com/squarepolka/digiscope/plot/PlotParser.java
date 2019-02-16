@@ -1,11 +1,10 @@
 package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.exceptions.ParseException;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
+import plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.processors.BinaryProcessor;
 import com.squarepolka.digiscope.plot.processors.PulseProcessor;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
-import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
+import recording.PlotPointRecording;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -89,7 +88,7 @@ public class PlotParser {
         if (data.length >= 2) { // Sample must have at both a time and volt value
             BigDecimal timeValue = parseTimeValue(data[0]);
             BigDecimal voltValue = parseVoltValue(data[1]);
-            PlotPointRaw plotPointRaw = new PlotPointRaw(timeValue, voltValue);
+            PlotPoint plotPointRaw = new PlotPoint(timeValue, voltValue);
             plotPointRecording.addPlotPoint(plotPointRaw);
             PlotPoint processedPlotPoint = pulseProcessor.processPlotPoint(plotPointRaw, plotPointRecording);
             binaryProcessor.processPlotPoint(processedPlotPoint, plotPointRecording);

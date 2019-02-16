@@ -2,9 +2,6 @@ package com.squarepolka.digiscope;
 
 
 import com.squarepolka.digiscope.plot.PlotParser;
-import com.squarepolka.digiscope.plot.PlotPointIterator;
-import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
-import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
 
 import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import org.junit.Before;
@@ -17,6 +14,9 @@ import org.mockito.MockitoAnnotations;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import plotpoint.PlotPoint;
+import recording.PlotPointIterator;
+import recording.PlotPointRecording;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class PlotParserTest {
         Mockito.when(bufferedReader.readLine()).thenReturn("1.01E-04,4.680", null);
         PlotPointRecording plotPointRecording = subject.parse();
         PlotPointIterator iterator = plotPointRecording.getPoints();
-        PlotPointRaw plotPointRaw = (PlotPointRaw) iterator.next();
+        PlotPoint plotPointRaw = (PlotPoint) iterator.next();
         assertEquals(0.000101, plotPointRaw.getTimestampSeconds().doubleValue(), 0);
         assertEquals(4.68, plotPointRaw.getVoltValue().doubleValue(), 0);
         assertEquals("Ensure there is only one value in the recording", false, iterator.hasNext());
@@ -64,11 +64,11 @@ public class PlotParserTest {
         PlotPointRecording plotPointRecording = subject.parse();
         PlotPointIterator iterator = plotPointRecording.getPoints();
 
-        PlotPointRaw plotPointRawOne = (PlotPointRaw) iterator.next();
+        PlotPoint plotPointRawOne = (PlotPoint) iterator.next();
         assertEquals(0.000101, plotPointRawOne.getTimestampSeconds().doubleValue(), 0);
         assertEquals(4.68, plotPointRawOne.getVoltValue().doubleValue(), 0);
 
-        PlotPointRaw plotPointRawTwo = (PlotPointRaw) iterator.next();
+        PlotPoint plotPointRawTwo = (PlotPoint) iterator.next();
         assertEquals(4200.0, plotPointRawTwo.getTimestampSeconds().doubleValue(), 0);
         assertEquals(2.57, plotPointRawTwo.getVoltValue().doubleValue(), 0);
 
