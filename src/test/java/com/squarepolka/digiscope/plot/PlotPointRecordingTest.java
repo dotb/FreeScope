@@ -2,6 +2,7 @@ package com.squarepolka.digiscope.plot;
 
 import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
+import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -187,7 +188,7 @@ public class PlotPointRecordingTest {
         String verticalGraphExpected = "0\t1000ms\t:\t2v\n" +
                 "1\t3000ms\t:\t4v\n" +
                 "2\t5000ms\t:\t6v\n";
-        String verticalGraphGenerated = subject.getVerticalGraph();
+        String verticalGraphGenerated = subject.getPlotPoints();
         assertEquals(verticalGraphExpected, verticalGraphGenerated);
     }
 

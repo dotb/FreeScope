@@ -1,5 +1,6 @@
-package com.squarepolka.digiscope.plot;
+package com.squarepolka.digiscope.plot.recording;
 
+import com.squarepolka.digiscope.plot.PlotPointIterator;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointBinary;
 
@@ -58,7 +59,7 @@ public class PlotPointRecording {
         return new PlotPointIterator(firstPlotPoint);
     }
 
-    public String getVerticalGraph() {
+    public String getPlotPoints() {
         PlotPointIterator plotPointIterator = getPoints();
         StringBuffer stringBuffer = new StringBuffer();
         int graphIndex = 0;

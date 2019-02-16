@@ -1,6 +1,6 @@
 package com.squarepolka.digiscope.plot.processors;
 
-import com.squarepolka.digiscope.plot.PlotPointRecording;
+import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointBinary;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointPulse;

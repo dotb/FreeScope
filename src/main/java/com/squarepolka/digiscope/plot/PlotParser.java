@@ -5,6 +5,7 @@ import com.squarepolka.digiscope.plot.plotpoint.PlotPoint;
 import com.squarepolka.digiscope.plot.processors.BinaryProcessor;
 import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
+import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

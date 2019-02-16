@@ -4,7 +4,7 @@ package com.squarepolka.digiscope;
 import com.squarepolka.digiscope.plot.PlotParser;
 import com.squarepolka.digiscope.plot.PlotPointIterator;
 import com.squarepolka.digiscope.plot.plotpoint.PlotPointRaw;
-import com.squarepolka.digiscope.plot.PlotPointRecording;
+import com.squarepolka.digiscope.plot.recording.PlotPointRecording;
 
 import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import org.junit.Before;
