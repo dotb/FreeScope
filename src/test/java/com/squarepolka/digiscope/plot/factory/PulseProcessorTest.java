@@ -3,24 +3,16 @@ package com.squarepolka.digiscope.plot.factory;
 import com.squarepolka.digiscope.plot.processors.PulseProcessor;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import plotpoint.PlotPoint;
 
 import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
-
-@RunWith(PowerMockRunner.class)
-@PrepareForTest( { PulseProcessor.class })
 public class PulseProcessorTest {
 
-    @InjectMocks
-    PulseProcessor subject;
+    private PulseProcessor subject = new PulseProcessor();
 
     @Before
     public void setUp() throws Exception {

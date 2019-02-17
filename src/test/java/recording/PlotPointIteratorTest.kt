@@ -1,26 +1,12 @@
 package recording
 
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.MockitoAnnotations
-import org.powermock.core.classloader.annotations.PrepareForTest
-import org.powermock.modules.junit4.PowerMockRunner
 import plotpoint.PlotPoint
 
 import java.math.BigDecimal
 
-@RunWith(PowerMockRunner::class)
-@PrepareForTest(PlotPointIterator::class)
 class PlotPointIteratorTest {
-
-    @Before
-    @Throws(Exception::class)
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
-    }
-
 
     @Test
     fun worksWithOneElement() {
@@ -75,7 +61,6 @@ class PlotPointIteratorTest {
         assertEquals(thirdPoint, subject.next())
         assertEquals(false, subject.hasNext()) // Should have no more
     }
-
 
 }
 
