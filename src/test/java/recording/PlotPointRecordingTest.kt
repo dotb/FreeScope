@@ -249,7 +249,7 @@ class PlotPointRecordingTest {
         assertEquals(middleNewPlotPoint, smallPlotPoint.previousLargerPoint)
         assertEquals(null, smallPlotPoint.nextSmallerPoint)
     }
-
+/*
     @Test
     fun addPointToSizedListFromLargeToSmall() {
         val largePlotPoint = PlotPoint(BigDecimal(3), BigDecimal(3))
@@ -297,5 +297,5 @@ class PlotPointRecordingTest {
         assertEquals(middleNewPlotPoint, iterator.next())
         assertEquals(smallPlotPoint, iterator.next())
     }
-
+*/
 }
