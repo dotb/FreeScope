@@ -1,3 +1,5 @@
 target
-.idea
-.scannerwork
+workspace.xml
+usage.statistics.xml
+tasks.xml
+.idea/sonarlint
