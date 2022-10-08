@@ -9,7 +9,7 @@
     <version>0.1</version>
 
     <properties>
-        <kotlin.version>1.3.21</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <powermock.version>1.7.1</powermock.version>
         <main.class>com.squarepolka.digiscope.DigiScope</main.class>
     </properties>
